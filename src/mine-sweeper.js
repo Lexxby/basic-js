@@ -24,57 +24,30 @@ const { NotImplementedError } = require('../extensions/index.js');
  * ]
  */
 function minesweeper(matrix) {
-  // let newMatrix = [...matrix];
-  // for (let i = 0; i < matrix.length; i++) {
-  //   for (let y = 0; y < matrix[i].length; y++) {
-  //     if (i === 0) {
-  //       if (matrix[i][y]) {
-  //         newMatrix[i][y] = 1;
-  //       } else {
-  //         if (matrix[i][y + 1]) {
-  //           newMatrix[i][y] = +newMatrix[i][y] + 1;
-  //         }
-  //         if (matrix[i][y - 1]) {
-  //           newMatrix[i][y] = +newMatrix[i][y] + 1;
-  //         }
-  //         if (matrix[i + 1][y]) {
-  //           newMatrix[i][y] = +newMatrix[i][y] + 1;
-  //         }
-  //         if (matrix[i + 1][y + 1]) {
-  //           newMatrix[i][y] = +newMatrix[i][y] + 1;
-  //         } else {
-  //           newMatrix[i][y] = +newMatrix[i][y];
-  //         }
-  //       }
-  //     } else {
-  //       if (matrix[i][y]) {
-  //         newMatrix[i][y] = +matrix[i][y] + 1;
-  //       }
-  //       if (matrix[i - 1][y] && !matrix[i][y]) {
-  //         newMatrix[i][y] = +matrix[i][y] + 1;
-  //       }
-  //       if (matrix[i - 1][y] && !matrix[i][y]) {
-  //         newMatrix[i][y] = +matrix[i][y] + 1;
-  //       }
-  //       if (matrix[i - 1][y - 1] && !matrix[i][y]) {
-  //         newMatrix[i][y] = +matrix[i][y] + 1;
-  //       }
-  //       if (matrix[i][y + 1]) {
-  //         newMatrix[i][y] = +matrix[i][y] + 1;
-  //       }
-  //       if (matrix[i][y - 1] && !matrix[i][y]) {
-  //         newMatrix[i][y] = +matrix[i][y] + 1;
-  //       }
-  //       if (matrix[i][y + 1] && !matrix[i][y]) {
-  //         newMatrix[i][y] = +matrix[i][y] + 1;
-  //       } else {
-  //         newMatrix[i][y] = 1;
-  //       }
-  //     }
-  //   }
-  // }
-  // return newMatrix;
-  // Дорешать
+  let result = matrix.map((array) => array.map((elem) => 0));
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j]) {
+        //проверили в текущей линии
+        if (j != 0) result[i][j - 1]++;
+        if (j != matrix[i].length - 1) result[i][j + 1]++;
+        //проверили в линии выше
+        if (result[i - 1]) {
+          result[i - 1][j]++;
+          result[i - 1][j - 1]++;
+          result[i - 1][j + 1]++;
+        }
+        //проверили в линии ниже
+        if (result[i + 1]) {
+          result[i + 1][j]++;
+          result[i + 1][j - 1]++;
+          result[i + 1][j + 1]++;
+        }
+      }
+    }
+  }
+  return result;
 }
 
 module.exports = {
